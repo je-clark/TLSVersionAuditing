@@ -248,9 +248,12 @@ def main(f_ptr, output_file):
         tls_ver = tls_hdr_details(packet.get_ssl_hdr())
         packet.save_summary(src_ip, dst_ip, src_port, dst_port, tls_ver)
         # Step 5: Save the resulting TLSSummary into a list
-        #if tls_ver == "Unknown":
-            #print("For frame " + str(index))
-            #packet.print_summary()
+        # Enable the below code if you have too many "Unknown" versions in the output
+        '''
+        if tls_ver == "Unknown":
+            print("For frame " + str(index))
+            packet.print_summary()
+        '''
         summary_list.append(packet.get_summary())
         # Step 6: go to next packet and back to Step 0
     # Step 7: Save TLSSummary list to a csv
@@ -264,12 +267,6 @@ def main(f_ptr, output_file):
 
 
 if __name__ == "__main__":
-    test_pcap_fn = "U:/Tools/ScriptedPacketDissection/ssl_hello.pcap"
-    sample_client_hello = "U:/Tools/ScriptedPacketDissection/client_hello.pcap"
-    sample_server_hello = "U:/Tools/ScriptedPacketDissection/server_hello.pcap"
-    small_file = "U:\Tools\ScriptedPacketDissection\REQ06931425@2019-04-26_11.33.47@10.27.143.76.pcap"
-    
-    dir = r'U:\Requests\REQ0693425 - SSL3 on AD\Captures'
 
     file_list = []
     for file in os.listdir(dir):
@@ -288,6 +285,4 @@ if __name__ == "__main__":
         print(f"Output to {os.path.relpath(output_fn)} complete")
         f.close()
 
-    #delta = t2-t1
-    #print(delta.total_seconds())
     pass
