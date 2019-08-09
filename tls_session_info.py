@@ -268,13 +268,24 @@ def main(f_ptr, output_file):
 
 if __name__ == "__main__":
 
+    help_text = '''TLS Version Auditor:
+        To pass a single file in, use the syntax 'python tls_session_info.py <file path>'
+        To pass a directory of pcaps, use        'python tls_session_info.py --bulk <directory path>'
+        To display this message, use             'python tls_session_info.py --help
+    '''
     file_list = []
-    for file in os.listdir(dir):
+    if sys.argv[1] == '--help':
+        print(help_text)
+        sys.exit()
+    if sys.argv[1] == '--bulk':
+        dir = sys.argv[2]
+        for file in os.listdir(dir):
         if file.endswith(".pcap"):
             file_list.append(f"{dir}\{file}")
             print(f"{file}")
-
-    active_file = small_file
+    else:
+        file_list.append(sys.argv[1])  
+    
 
     for file in file_list:
         print(f"Starting file {os.path.relpath(file)}")
